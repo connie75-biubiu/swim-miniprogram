@@ -1,0 +1,46 @@
+# 部署到云主机时使用：把本文件 + server/ 目录一起放到云主机
+# 启动：docker compose up -d --build
+services:
+  postgres:
+    image: postgres:16
+    container_name: swim-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-swim}
+      POSTGRES_USER: ${DB_USERNAME:-football}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # 生产环境建议注释掉下面这行，不要把数据库暴露到公网
+    # ports:
+    #   - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-football} -d ${DB_NAME:-swim}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: swim-server:latest
+    container_name: swim-server
+    restart: unless-stopped
+    env_file:
+      - ./server/.env
+    environment:
+      # 关键：容器内不能用 localhost，要用 compose 服务名 postgres
+      DB_HOST: postgres
+      DB_PORT: 5432
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      # 持久化日志，application.yml 写到 logs/swim.log
+      - ./logs:/app/logs
+
+volumes:
+  pgdata:
