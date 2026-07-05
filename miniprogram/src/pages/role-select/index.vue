@@ -20,7 +20,7 @@
 
     </view>
 
-    <view class="card" @tap="pick('coach')">
+    <view class="card disabled">
 
       <text class="icon">👨‍🏫</text>
 
@@ -28,9 +28,11 @@
 
         <text class="name">我是教练</text>
 
-        <text class="sub">查看学员训练数据（二期开发中）</text>
+        <text class="sub">敬请期待，后续版本支持</text>
 
       </view>
+
+      <text class="tag">即将上线</text>
 
     </view>
 
@@ -50,15 +52,7 @@ async function pick(role: 'student' | 'coach') {
 
   await selectRole(role)
 
-  if (role === 'coach') {
-
-    uni.reLaunch({ url: '/pages/coach-home/index' })
-
-  } else {
-
-    uni.reLaunch({ url: '/pages/index/index' })
-
-  }
+  uni.reLaunch({ url: '/pages/index/index' })
 
 }
 
@@ -74,7 +68,9 @@ async function pick(role: 'student' | 'coach') {
 
 .desc { font-size: 13px; color: #999; text-align: center; margin-bottom: 32px; }
 
-.card { background: #fff; border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+.card { background: #fff; border-radius: 12px; padding: 20px; display: flex; align-items: center; gap: 16px; margin-bottom: 12px; position: relative; }
+
+.card.disabled { opacity: 0.55; }
 
 .icon { font-size: 36px; }
 
@@ -82,5 +78,6 @@ async function pick(role: 'student' | 'coach') {
 
 .sub { font-size: 12px; color: #999; margin-top: 4px; display: block; }
 
-</style>
+.tag { position: absolute; top: 12px; right: 12px; font-size: 10px; color: #fff; background: #bbb; padding: 2px 8px; border-radius: 10px; }
 
+</style>

@@ -8,8 +8,6 @@ export function wxLogin(code: string) {
 
     token: string
 
-    needBindPhone: boolean
-
     needSelectRole: boolean
 
     role: string | null

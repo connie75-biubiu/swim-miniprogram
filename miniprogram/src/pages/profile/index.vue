@@ -8,8 +8,6 @@
 
       <text class="name">{{ profile.nickname || '游泳学员' }}</text>
 
-      <text class="phone">{{ profile.phone || '' }}</text>
-
       <view class="meta">
 
         <text v-if="profile.gender">{{ profile.gender === 1 ? '♂ 男' : '♀ 女' }}</text>
@@ -30,16 +28,6 @@
 
       </view>
 
-      <view class="item" @tap="goCoach">
-
-        <text>👨‍🏫 授权教练</text>
-
-        <text class="count">{{ coachCount }} 位</text>
-
-        <text class="arrow">›</text>
-
-      </view>
-
     </view>
 
     <button class="logout" @tap="logout">退出登录</button>
@@ -52,13 +40,11 @@
 
 <script setup lang="ts">
 
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 
 import { onShow } from '@dcloudio/uni-app'
 
 import { getProfile } from '@/api/user'
-
-import { getCoachAuthList } from '@/api/user'
 
 
 
@@ -66,15 +52,11 @@ const profile = reactive({
 
   nickname: '',
 
-  phone: '',
-
   gender: null as number | null,
 
   birthMonth: '',
 
 })
-
-const coachCount = ref(0)
 
 
 
@@ -92,15 +74,9 @@ onShow(async () => {
 
   profile.nickname = p.nickname || ''
 
-  profile.phone = p.phone || ''
-
   profile.gender = p.gender
 
   profile.birthMonth = p.birthMonth || ''
-
-  const list = await getCoachAuthList()
-
-  coachCount.value = list.length
 
 })
 
@@ -119,14 +95,6 @@ function formatBirth(m: string) {
 function goEdit() {
 
   uni.navigateTo({ url: '/pages/profile-edit/index' })
-
-}
-
-
-
-function goCoach() {
-
-  uni.navigateTo({ url: '/pages/coach-auth/index' })
 
 }
 
@@ -152,8 +120,6 @@ function logout() {
 
 .name { font-size: 18px; font-weight: 600; display: block; }
 
-.phone { font-size: 13px; color: #999; margin-top: 4px; display: block; }
-
 .meta { display: flex; justify-content: center; gap: 16px; margin-top: 8px; font-size: 13px; color: #666; }
 
 .badge { display: inline-block; margin-top: 8px; font-size: 11px; background: #E8F6FC; color: #0096D6; padding: 3px 10px; border-radius: 12px; }
@@ -164,11 +130,8 @@ function logout() {
 
 .item:last-child { border: none; }
 
-.count { margin-left: auto; font-size: 11px; color: #D48806; background: #FFF7E6; padding: 2px 8px; border-radius: 10px; margin-right: 8px; }
-
 .arrow { color: #ccc; }
 
 .logout { margin: 24px 16px; background: #fff; color: #0096D6; border: 1px solid #0096D6; border-radius: 8px; }
 
 </style>
-

@@ -12,14 +12,6 @@
 
     <view class="row">
 
-      <text class="label">手机号</text>
-
-      <input v-model="form.phone" type="number" maxlength="11" placeholder="请输入11位手机号" class="input" />
-
-    </view>
-
-    <view class="row">
-
       <text class="label">出生年月</text>
 
       <picker mode="date" fields="month" :value="form.birthMonth + '-01'" @change="onBirth">
@@ -62,7 +54,7 @@ import { getProfile, updateProfile } from '@/api/user'
 
 
 
-const form = reactive({ nickname: '', phone: '', birthMonth: '', gender: 1 })
+const form = reactive({ nickname: '', birthMonth: '', gender: 1 })
 
 
 
@@ -71,8 +63,6 @@ onLoad(async () => {
   const p = await getProfile()
 
   form.nickname = p.nickname || ''
-
-  form.phone = ''
 
   form.birthMonth = p.birthMonth || ''
 
@@ -100,19 +90,9 @@ function gClass(n: number) {
 
 async function save() {
 
-  if (form.phone && !/^1\d{10}$/.test(form.phone)) {
-
-    uni.showToast({ title: '请输入正确的手机号', icon: 'none' })
-
-    return
-
-  }
-
   await updateProfile({
 
     nickname: form.nickname,
-
-    phone: form.phone || undefined,
 
     gender: form.gender,
 
@@ -138,8 +118,6 @@ async function save() {
 
 .input { flex: 1; text-align: right; font-size: 15px; }
 
-.readonly { flex: 1; text-align: right; color: #999; font-size: 15px; }
-
 .radio { flex: 1; display: flex; gap: 12px; justify-content: flex-end; }
 
 .r { padding: 6px 16px; border: 1px solid #ddd; border-radius: 20px; font-size: 13px; }
@@ -149,4 +127,3 @@ async function save() {
 .save { margin: 16px; background: #0096D6; color: #fff; border-radius: 8px; }
 
 </style>
-

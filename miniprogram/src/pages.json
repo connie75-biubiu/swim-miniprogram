@@ -6,8 +6,6 @@
 
     { "path": "pages/role-select/index", "style": { "navigationBarTitleText": "选择身份" } },
 
-    { "path": "pages/coach-home/index", "style": { "navigationBarTitleText": "教练端" } },
-
     { "path": "pages/index/index", "style": { "navigationBarTitleText": "泳记" } },
 
     { "path": "pages/stroke/index", "style": { "navigationBarTitleText": "速度趋势" } },
@@ -24,11 +22,7 @@
 
     { "path": "pages/profile/index", "style": { "navigationBarTitleText": "我的" } },
 
-    { "path": "pages/profile-edit/index", "style": { "navigationBarTitleText": "编辑资料" } },
-
-    { "path": "pages/coach-auth/index", "style": { "navigationBarTitleText": "授权教练" } },
-
-    { "path": "pages/coach-add/index", "style": { "navigationBarTitleText": "添加教练" } }
+    { "path": "pages/profile-edit/index", "style": { "navigationBarTitleText": "编辑资料" } }
 
   ],
 

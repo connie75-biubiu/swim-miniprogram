@@ -6,8 +6,6 @@ export interface Profile {
 
   nickname: string | null
 
-  phone: string | null
-
   role: string | null
 
   gender: number | null
@@ -30,8 +28,6 @@ export function updateProfile(data: {
 
   nickname?: string
 
-  phone?: string
-
   gender?: number
 
   birthMonth?: string
@@ -49,50 +45,3 @@ export function selectRole(role: 'student' | 'coach') {
   return request<Profile>({ url: '/api/user/role', method: 'POST', data: { role } })
 
 }
-
-
-
-export interface CoachAuthItem {
-
-  id: number
-
-  coachName: string
-
-  coachPhone: string
-
-  createdAt: string
-
-}
-
-
-
-export function getCoachAuthList() {
-
-  return request<CoachAuthItem[]>({ url: '/api/user/coach-auth' })
-
-}
-
-
-
-export function addCoachAuth(coachPhone: string) {
-
-  return request<CoachAuthItem>({
-
-    url: '/api/user/coach-auth',
-
-    method: 'POST',
-
-    data: { coachPhone },
-
-  })
-
-}
-
-
-
-export function revokeCoachAuth(id: number) {
-
-  return request<null>({ url: `/api/user/coach-auth/${id}`, method: 'DELETE' })
-
-}
-

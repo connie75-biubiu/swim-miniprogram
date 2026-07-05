@@ -100,7 +100,8 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(user.getId());
 
-        boolean needBindPhone = user.getPhone() == null || user.getPhone().isBlank();
+        // 手机号绑定已下线（隐私协议不再收集手机号），needBindPhone 恒为 false
+        boolean needBindPhone = false;
 
         boolean needSelectRole = user.getRole() == null || user.getRole().isBlank();
 
@@ -144,7 +145,8 @@ public class AuthService {
 
         vo.setNickname(user.getNickname());
 
-        vo.setPhone(maskPhone(user.getPhone()));
+        // 手机号字段已下线，不再返回给前端（数据库列保留，便于后续恢复）
+        // vo.setPhone(maskPhone(user.getPhone()));
 
         vo.setRole(user.getRole());
 
@@ -168,17 +170,8 @@ public class AuthService {
 
         }
 
-        if (req.getPhone() != null) {
-
-            if (!req.getPhone().matches("^1\\d{10}$")) {
-
-                throw new BusinessException(400, "手机号格式不正确");
-
-            }
-
-            user.setPhone(req.getPhone());
-
-        }
+        // 手机号字段已下线，忽略前端传入的 phone（数据库列保留，便于后续恢复）
+        // if (req.getPhone() != null) { ... }
 
         if (req.getGender() != null) {
 
